@@ -1,5 +1,3 @@
-![Mustang Bucks Banner](banner.png)
-
 🏁 Mustang Bucks – Hollywood Beach Edition
 An interactive browser-based driving game where players enter three numbers between 100–999 for a chance to win a 2027 Ford Mustang or $200 Ford Bucks.
 
