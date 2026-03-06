@@ -2,7 +2,7 @@
 An interactive browser-based driving game where players enter three numbers between 100–999 for a chance to win a 2027 Ford Mustang or $200 Ford Bucks.
 
 Live Game:
-👉 https://briggs10.github.io/
+👉 (https://briggs10.github.io/MustangBucks.github.io/)
 
 🎮 Game Overview: 
 Mustang Bucks is a canvas-powered arcade-style web game built using HTML, CSS, and JavaScript.
