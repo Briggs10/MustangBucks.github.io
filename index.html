@@ -1,53 +1,148 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" href="./favicon.png">
 <meta charset="UTF-8">
 <title>Mustang Bucks – Hollywood Beach Edition</title>
 <style>
-body{margin:0;font-family:Arial, Helvetica, sans-serif;background:#87CEEB;color:black;text-align:center;overflow:auto;}
+@keyframes bounceTitle {
+0%   { transform: translateY(0); }
+50%  { transform: translateY(-15px); }
+100% { transform: translateY(0); }
+}
+#welcomeScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgb(5, 5, 5);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+
+#welcomeScreen img{
+max-width:700px;
+width:85%;
+height:auto;
+border:5px solid rgb(5, 5, 5);
+border-radius:12px;
+box-shadow: 0 0 25px hsl(65, 100%, 50%);
+animation: bounceTitle 2s infinite ease-in-out;
+}
+
+#welcomeButtons{
+margin-top:20px;
+}
+
+#welcomeButtons button{
+font-size:20px;
+padding:12px 30px;
+margin:10px;
+border-radius:10px;
+cursor:pointer;
+}
+
+#instructions{
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:30px;
+border-radius:10px;
+width:60%;
+z-index:2000;
+box-shadow:0 0 20px black;
+}
+
+#instructions h2{
+margin-top:0;
+}
+body{margin:0;font-family:Arial, Helvetica, sans-serif;background:#090909;color:black;text-align:center;overflow:auto;}
 h1{color:#003366;}
-canvas{display:block;margin:20px auto;border:2.5pt solid #000;max-width:100%;height:auto;}
+canvas{display:block;margin:20px auto;border:2.5pt solid lch(93.2% 3.1 290.45);max-width:100%;height:auto;}
 #controls{margin:15px;}
 select,input{padding:8px;font-size:16px;border-radius:6px;border:1px solid #333;}
 button{padding:8px 16px;font-size:16px;margin:5px;border-radius:6px;border:1px solid #333;cursor:pointer;}
 #info{margin-top:15px;font-weight:bold;}
-footer{margin-top:30px;padding:15px;background:#003366;color:white;font-size:14px;letter-spacing:1px;}
+footer{margin-top:30px;padding:15px;background:lab(18.94% 0 0);color:white;font-size:14px;letter-spacing:1px;}
 footer span{color:#87CEEB;font-weight:bold;}
+#gameContainer{
+display:none;
+}
 </style>
 </head>
 <body>
+<div id="welcomeScreen">
 
-<h1>WELCOME TO MUSTANG BUCKS!!!<br > WIN A FORD MUSTANG OR $200 FORD BUCKS!!!</h1>
-</h2>DRIVER'S MANUAL:</h2>
-<p>WIN A 2027 FORD MUSTANG BY ENTERING THREE NUMBERS BETWEEN 100-999. <br>THE NUMBERS MUST MATCH MR. FORDS 3 NUMBERS IN ROUNDS 1, 2, AND 3 TO WIN A 2027 FORD MUSTANG!!!</p>
+<img src="mustang-bucks.png">
 
-<p>CRASHED OUT IN ROUNDS 1 AND 2? KEEP DRIVING!! YOU CAN WIN $200 IN FORD BUCKS BY WINNING ROUND 3, ONLY!!</p>
+<div id="welcomeButtons">
 
-<p>ENTER <strong>DRIVER</strong> NAME, SELECT <strong>VEHICLE</strong>, ENTER<strong> THREE NUMBERS!</strong><br>
-<br>SELECT <strong>"DRIVE"</strong> to <strong>"GO"</strong>, 
-<strong>"PARK"</strong> to <strong> "STOP",</strong> 
-or <strong>"SPIN BLOCK"</strong> to <strong>"PLAY AGAIN"!</strong>
-<br>
+<button onclick="startGame()"> START DRIVING</button>
+
+<button onclick="openBook()">📖 DRIVER MANUAL</button>
+
+</div>
+<div id="instructions">
+
+<h2>HOW TO BE A WINNER</h2>
+
+<p>
+WIN A 2027 FORD MUSTANG BY ENTERING THREE NUMBERS BETWEEN 100-999.
 </p>
 
-<h3></strong>LET'S DRIVE!!!</strong></h3>
+<p>
+MATCH MR. FORD'S NUMBERS IN ROUNDS 1, 2 AND 3 TO WIN THE MUSTANG.
+</p>
 
+<p>
+CRASH OUT IN ROUND 1 OR 2? KEEP DRIVING!
+YOU CAN STILL WIN $200 FORD BUCKS BY WINNING ROUND 3.
+</p>
+
+<h2>HOW TO PLAY</h2>
+ 
+(1) ENTER DRIVER NAME, (2) SELECT VEHICLE, (3) INPUT THREE NUMBERS, (4) PUSH DRIVE<br>
+
+<br><h2>GEARS</h2>
+
+<p>
+(1) PRESS <b>DRIVE</b> to <b>PLAY, </b> 
+(2) PRESS <b>PARK</b> to <b>STOP, </b> 
+(3) PRESS <b>SPIN BLOCK</b> to <b>RESET</b> 
+</p>
+
+<button onclick="closeBook()">Close Manual</button>
+
+</div>
+</div>
+<!--Game Container-->
+<div id="gameContainer">  
+<!--Game Interface
+-->    
+</div>
 <canvas id="game" width="1250" height="600"></canvas>
+<div id="info"></div>
 
+<!--User Input Controls-->
+</div>
 <div id="controls">
 <input type="text" id="driverName" placeholder="Enter Driver Name">
 <select id="vehicleSelect">
 <option value="mach">Red Mach-E</option>
 <option value="f150">Black F-150</option>
 </select>
+
 <input type="number" id="guess" min="100" max="999" placeholder="Enter 3 digit number">
+
 <button onclick="submitGuess()">DRIVE</button>
 <button onclick="parkGame()">PARK</button>
 <button onclick="resetGame()">SPIN BLOCK</button>
-</div>
-
-<div id="info"></div>
 
 <footer>
 © 2026 Mustang Bucks | Version <span>1.0 Hollywood Beach Edition</span><br> Release Date: <span>March 2026</span> |
@@ -173,7 +268,7 @@ if(showTicket){
 
     ctx.font="22px Arial";
     ctx.fillText(
-        playerName + " – CONGRATULATIONS, YOU WON $200 FORD BUCKS!",
+        playerName + " – CONGRATULATIONS, YOU WON $200 IN FORD BUCKS!",
         300 + 325,   // Center of ticket (300 + half width 650/2)
         220
     );
@@ -259,10 +354,20 @@ if(playerNumbers[2]===winningNumbers[2] && wins<3){
 document.getElementById("info").innerHTML="<strong>"+playerName+"'S RESULTS</strong><br>Winning Rounds: "+wins+" / 3<br>Player Numbers: "+playerNumbers.join(", ")+"<br>Dealer Numbers: "+winningNumbers.join(", ")+"<br><br>"+message;
 }
 drawScene();
+
+
+function openBook(){
+document.getElementById("instructions").style.display="block";
+}
+
+function closeBook(){
+document.getElementById("instructions").style.display="none";
+}
+function startGame(){
+document.getElementById("welcomeScreen").style.display="none";
+document.getElementById("gameContainer").style.display="block";
+}
+
 </script>
 </body>
 </html>
-
-
-
-
